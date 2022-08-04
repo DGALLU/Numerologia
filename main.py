@@ -16,7 +16,7 @@ class intro(QMainWindow):
     def __init__(self):
         global res
         QMainWindow.__init__(self)
-        #print(res)
+        ##print(res)
         if res == 'std':
             self.ui = Ui_Intro()
         else: 
@@ -133,12 +133,12 @@ class aplicacion(QMainWindow):
         sendero_nat_k=[0,'',0,'']    
         if dia_nac != '11':
             dia_nac=self.reducir_v(dia_nac)
-        print(dia_nac)
+        #print(dia_nac)
         if mes_nac != '11':
             mes_nac = self.reducir_v(mes_nac)
-        print(mes_nac)
+        #print(mes_nac)
         anio_nac = self.reducir_tot(anio_nac)
-        print(anio_nac)
+        #print(anio_nac)
 
         #sendero_nat_k = self.calcular_karma_s([self.reducir_v(dia_nac),self.reducir_v(mes_nac),self.reducir_v(anio_nac)],sendero_nat_k)
         sendero_nat_k = self.calcular_karma_s([dia_nac,mes_nac,anio_nac],sendero_nat_k)
@@ -314,7 +314,7 @@ class aplicacion(QMainWindow):
         once = lista.count('11')
         ventidos = lista.count('22')
         cant = len(lista)
-        print(lista)
+        #print(lista)
         if once == 3 and cant == 3:
             return '33'
     
@@ -328,7 +328,7 @@ class aplicacion(QMainWindow):
         else:
             valor = self.reducir(str(suma))
         suma = int(valor) + 11*once + 22*ventidos
-        print(suma)
+        #print(suma)
         if suma == 11 or suma == 22: return str(suma)
         else: return self.reducir_tot(str(suma))
         
@@ -397,9 +397,9 @@ class aplicacion(QMainWindow):
     def reducir_etapa(self, lista):
         suma=0
         valor=0
-        print(lista)
+        #print(lista)
         once = lista.count('11')
-        print('once: '+str(once))
+        #print('once: '+str(once))
         cant = len(lista)
         if once == 2: return '22'
         
@@ -408,9 +408,11 @@ class aplicacion(QMainWindow):
         else:
             for n in lista:
                 suma=suma+int(n)
-            print('suma:'+str(suma))
+            #print('suma:'+str(suma))
             if len(str(suma)) > 1:
-                if suma != 11 or suma != 22:
+                #print('if1 '+str(suma))
+                if suma != 11 and suma != 22:
+                    #print('if2 '+str(suma))
                     suma=int(self.reducir_v(str(suma)))
             return str(suma)
     
@@ -495,9 +497,9 @@ class aplicacion(QMainWindow):
         else:
             valores_k[3]=' '
             
-        print('k0'+str(valores_k[0]))
-        print('k2'+str(valores_k[2]))
-        print('aux'+str(aux))        
+        #print('k0'+str(valores_k[0]))
+        #print('k2'+str(valores_k[2]))
+        #print('aux'+str(aux))        
         valores_k[0]=aux
 
         if valores_k[0] == 11 or valores_k[0] == 22:
@@ -612,16 +614,23 @@ class aplicacion(QMainWindow):
         self.ui.etapa_4.setText(etapa_4)
 
 #nuevo reducir, donde solo se deja el 11
-        #etapa_1_v=int(self.reducir_etapa([dia_nac,mes_nac])) 
+        #print('etapa 1')
+        etapa_1_v=int(self.reducir_etapa([self.reducir_etapa(dia_nac),self.reducir_etapa(mes_nac)])) 
         #etapa_2_v=int(self.reducir_etapa([dia_nac,anio_nac]))
         #etapa_4_v=int(self.reducir_etapa([mes_nac,anio_nac]))
-        etapa_1_v=int(self.reducir_etapa(str(int(self.reducir_etapa(dia_nac))+int(self.reducir_etapa(mes_nac)) )))
+        
+        #etapa_1_v=int(self.reducir_etapa(str(int(self.reducir_etapa(dia_nac))+int(self.reducir_etapa(mes_nac)) )))
+        #print('etapa 2')
+        
         etapa_2_v=int(self.reducir_etapa(str(int(self.reducir_etapa(dia_nac))+int(self.reducir_etapa(anio_nac)))))
+        #print('etapa 4')
+        
         etapa_4_v=int(self.reducir_etapa(str(int(self.reducir_etapa(mes_nac))+int(self.reducir_etapa(anio_nac)))))
         
         self.ui.etapa_1_v.setText((str(etapa_1_v)))
         self.ui.etapa_2_v.setText((str(etapa_2_v)))
-        print('etapa 3')
+        #print('etapa 3')
+        
         self.ui.etapa_3_v.setText(self.reducir_etapa([str(etapa_1_v),str(etapa_2_v)]))
         self.ui.etapa_4_v.setText(str(etapa_4_v))
 
